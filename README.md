@@ -1,11 +1,19 @@
-# My First Python Project
+# Student Performance Dashboard
 
-This is my first Python project uploaded to GitHub.
+An interactive Python dashboard for analyzing students' academic performance and attendance.
 
-## Description
-
-This project is a simple Python program created for learning and practicing Python.
-
+## Features
+Upload student data from Excel
+--Analyze students' average scores
+--Monitor attendance
+--Interactive charts
+--Data filtering and visualization.
+## Technologies
+Python
+--Pandas
+--Streamlit
+--Plotly
+--Exel
 ## How to Run
 
 Run the Python file using Python 3.
