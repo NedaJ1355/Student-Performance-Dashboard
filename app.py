@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 
-# تنظیمات صفحه
+# Page Settings
 st.set_page_config(
     page_title="Student Dashboard",
     page_icon="📊",
@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 
-#------- تغییرات ظاهر--------
+#-------Visual Changes--------
 st.markdown("""
 <style>
 
@@ -63,14 +63,14 @@ h2, h3 {
 </style>
 """, unsafe_allow_html=True)
 
-# عنوان
+# --------Title-----------
 st.title("📊 Student Performance Dashboard")
 uploaded_file = st.file_uploader(
     "📁 Upload Students Excel File",
     type=["xlsx"]
 )
 
-# خواندن فایل Excel
+# ---------Reading an Excel file----------
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file)
 else:
@@ -78,7 +78,7 @@ else:
 if uploaded_file is None:
     st.info("Please upload an Excel file to analyze.")
 
-#-------محاسبه معدل
+#------------GPA calculation------------
 df["Average"] = df[["Math", "Physics", "English"]].mean(axis=1)
 #------Make a function to describe students status and show in a box
 
@@ -92,7 +92,7 @@ def get_status(average):
 
 df["Status"] = df["Average"].apply(get_status)# apply the get_status function on all of student's average and put the result in the new column
 
-#------------------------------------فیلتر دانش آموزان-با side bar--------------------
+#--------------------Student Filter by sidebar --------------------
 st.sidebar.title("🎛️ Dashboard")
 
 st.sidebar.subheader("🔍 Filter Students")
@@ -107,7 +107,7 @@ filter_option = st.sidebar.selectbox(
 
     ]
 )
-#-----------------------------ایجاد نوار لغزنده-------------------------
+#-----------------Creating a slider-----------------------
 slider_value = st.sidebar.slider(
     "Minimum Average",
     min_value=0.0,
@@ -117,7 +117,7 @@ slider_value = st.sidebar.slider(
 )
 min_average = slider_value
 
-#--------------نمایش اطلاعات پروژه-------------
+#--------------Display project information-------------
 st.sidebar.divider()
 
 st.sidebar.write("📌 Project Information")
@@ -128,7 +128,7 @@ st.sidebar.write("Python + Pandas + Streamlit")
 
 
 
-#-------------فیلترها--------------------
+#------------Filters--------------------
 
 if filter_option == "All Students":
     filtered_df = df
@@ -143,7 +143,7 @@ elif filter_option == "Excellent Students":
     filtered_df = df[df["Average"] >= 18]
 filtered_df = filtered_df[filtered_df["Average"] >= min_average]
 
-#ایجاد ساید بار برای مرتب کردن انتخابی---------
+#-------------Creating a sidebar for selective sorting---------
 st.sidebar.divider()
 sort_option = st.sidebar.selectbox(
     "Sort Students By:",
@@ -172,7 +172,7 @@ elif sort_option == "Name: A to Z":
         ascending=True
     )
 
-#----------انتخاب نام و نمایش اطلاعات--------
+#--------Selecting a Name and displaying information---------
 st.subheader("👩‍🎓 Student Details")
 selected_student = st.selectbox("Select a student:", df["Name"])
 student = df[df["Name"] == selected_student].iloc[0]
@@ -181,12 +181,12 @@ col1.metric("📊 Average",f"{student['Average']:.2f}")
 col2.metric("📅 Attendance",f"{student['Attendance']}%")
 col3.metric( "📐 Math", student["Math"])
 
-#-------نمایش نمرات دانش آموز انتخاب شده-----
+#-------Display grades for the selected student-----
 
 st.write("### Subject Grades")
 subject_data = pd.DataFrame({ "Subject": ["Math", "Physics", "English"],"Grade": [student["Math"],student["Physics"],student["English"]]})
 #st.dataframe( subject_data,use_container_width=True, hide_index=True)
-#قسمت استایل پایین رو با خط بالا جایگزین کردم برای اینکه تغییرات رنگ زمینه و نوشته جدول اعمال شود
+#I replaced the style section below with the line above so that the background and text color changes for the table would be applied.
 styled_subject = subject_data.style \
     .set_properties(**{
         "background-color": "#FFFFFF",
@@ -220,7 +220,7 @@ students_need_attention = df[
 
 number_need_attention = len(students_need_attention)
 
-# نمایش اطلاعات اصلی-----
+# ------------Show basic information-----
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("👩‍🎓 Students", number_of_students)
@@ -240,10 +240,10 @@ col4.metric(
     number_need_attention
 )
 
-# خط جداکننده
+
 st.divider()
 
-#-------show the status of selected student
+#-------show the status of selected student------
 
 
 st.write("### Student Status")
@@ -259,11 +259,11 @@ elif status == "Good":
 else:
     st.warning("🔴 Needs Attention")
 
-# نمایش جدول
+#----------------Show the table-----------
 st.subheader("📋 Student Grades")
 
 #st.dataframe( filtered_df , use_container_width=True )
-#قسمت استایل پایین رو با خط بالا جایگزین کردم برای اینکه تغییرات رنگ زمینه و نوشته جدول اعمال شود
+#I replaced the style section below with the line above so that the background and text color changes for the table would be applied.
 styled_df = filtered_df.style \
     .set_properties(**{
         "background-color": "#FFFFFF",
@@ -289,7 +289,7 @@ st.dataframe(
 )
 
 # -------------------------
-# نمودار معدل دانش‌آموزان
+# Student Grade Point Average Chart
 # -------------------------
 
 st.subheader("📊 Students Average")
@@ -322,7 +322,7 @@ st.plotly_chart(
 )
 
 # -------------------------
-# نمودار حضور و غیاب
+# Attendance chart
 # -------------------------
 
 st.subheader("📅 Students Attendance")
