@@ -14,12 +14,10 @@ Python
 --Streamlit
 --Plotly
 --Exel
-## How to Run
-
-Run the Python file using Python 3.
 ## Dashboard Preview
 ![Student-Performance-Dashboard](Dashboard1.png)
-
+## How to Run
+Run the Python file using Python 3.
 ## Author
 
 Neda
