@@ -16,6 +16,9 @@ Python
 --Exel
 ## Dashboard Preview
 ![Student-Performance-Dashboard](Dashboard1.png)
+![Student-Performance-Dashboard](Dashboard2.png)
+![Student-Performance-Dashboard](Dashboard3.png)
+![Student-Performance-Dashboard](Dashboard4.png)
 ## How to Run
 Run the Python file using Python 3.
 ## Author
